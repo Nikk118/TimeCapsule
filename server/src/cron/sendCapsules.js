@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import Capsule from "../models/capsule.model.js";
 import Media from "../models/media.js";
-import sendMail from "../utils/email.utils.js"; 
+import {sendCapsuleEmail} from "../utils/email.utils.js"; 
 
 export const startDeliveryCron = () => {
   cron.schedule("*/60 * * * *", async () => {
@@ -26,7 +26,7 @@ export const startDeliveryCron = () => {
         const mediaFiles = await Media.find({ capsuleId: capsule._id });
 
         // Send the email with the message and media attachments
-        await sendMail({
+        await sendCapsuleEmail({
           to: capsule.email,
           subject: "🎁 Your Time Capsule Has Arrived!",
           text: capsule.message,
