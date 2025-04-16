@@ -17,7 +17,7 @@ export default function LandingPage() {
         </p>
         <div className="space-x-4">
           <Link 
-            to="/create" 
+            to="/login" 
             className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-700 transition"
           >
             Create Your Capsule
@@ -77,7 +77,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
+    
       
     </div>
   );

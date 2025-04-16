@@ -49,6 +49,12 @@ const login=async(req,res)=>{
     }
 }
 
+const getUser=async(req,res)=>{
+  const user= await User.findById(req.user._id)
+
+  return res.status(200).json({message:"current user",user})
+}
+
 const logout=async(req,res)=>{
   try {
     res.cookie("jwt","",{maxAge:0});
@@ -60,5 +66,6 @@ const logout=async(req,res)=>{
 
 export { signup,
     login,
-    logout
+    logout,
+    getUser
 }

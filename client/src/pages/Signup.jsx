@@ -2,26 +2,20 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import {authStore} from "../store/authStore"
 export default function Signup() {
+  const {signUp,islogginin}=authStore()
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
   const navigate = useNavigate();
+  
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError('');
-
-    try {
-      const res = await axios.post('/api/auth/signup', { username, email, password });
-      if (res.data.success) {
-        navigate('/login');
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed');
-    }
+    signUp({ username, email, password })
+   
   };
 
   return (
@@ -31,9 +25,7 @@ export default function Signup() {
           Create Account
         </h2>
 
-        {error && (
-          <p className="text-sm text-red-500 text-center mb-4">{error}</p>
-        )}
+        
 
         <form onSubmit={handleSignup} className="space-y-5">
           <div>
@@ -79,7 +71,7 @@ export default function Signup() {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
           >
-            Sign Up
+            {islogginin?"Signning Up":"Sign Up"}
           </button>
         </form>
 

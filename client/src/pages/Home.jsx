@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { authStore } from "../store/authStore";
 
 const Home = () => {
   const [message, setMessage] = useState("");
@@ -17,27 +18,7 @@ const Home = () => {
       formData.append("files", file);
     });
 
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/api/capsules/create",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      console.log("Capsule created:", res.data);
-      setCapsules([res.data.capsule, ...capsules]);
-      setMessage("");
-      setDate("");
-      setMediaFiles([]);
-    } catch (err) {
-      console.error("Error:", err.response?.data?.message || err.message);
-      alert("Failed to create capsule");
-    }
+   
   };
 
   return (
@@ -59,7 +40,7 @@ const Home = () => {
           />
 
           <input
-            type="date"
+            type="datetime-local"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="w-full border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-400"

@@ -4,6 +4,7 @@ import connectDB from "./config/index.js"
 import userRouter from "./routers/user.route.js"
 import cookieParser from "cookie-parser"
 import capsuleRouter from "./routers/capsule.route.js"
+import cors from "cors"
 configDotenv()
 const app = express()
 
@@ -22,6 +23,11 @@ app.use(express.json())
 app.use(urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(express.static("public"))
+
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true 
+  }));
 
 app.use("/api/user",userRouter)
 app.use("/api/capsule",capsuleRouter)
