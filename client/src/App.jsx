@@ -24,7 +24,7 @@ function App() {
       <div className="m-0 p-0 w-screen h-screen">
        <Navbar/>
       <Routes>
-        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/' element={authUser?<Home/>:<LandingPage/>}/>
         <Route path='login' element={authUser?<Home/>:<Login/>}/>
         <Route path='signup' element={authUser?<Home/>:<Signup/>}/>
         <Route path='home' element={authUser?<Home/>:<Login/>}/>

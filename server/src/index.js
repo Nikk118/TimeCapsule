@@ -19,8 +19,9 @@ connectDB()
     console.log("error",error)
 })
 
-app.use(express.json())
-app.use(urlencoded({extended:true}))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser())
 app.use(express.static("public"))
 

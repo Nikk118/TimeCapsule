@@ -4,7 +4,7 @@ import Media from "../models/media.js";
 import {sendCapsuleEmail} from "../utils/email.utils.js"; 
 
 export const startDeliveryCron = () => {
-  cron.schedule("*/60 * * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     console.log("⏰ Cron job running...");
 
     const now = new Date();
@@ -22,19 +22,27 @@ export const startDeliveryCron = () => {
       }
 
       for (let capsule of capsules) {
+        console.log("this is email",capsule.email)
+        // Check if the capsule has an email and it's valid
+        if (!capsule.email || !/\S+@\S+\.\S+/.test(capsule.email)) {
+          console.warn(`⚠️ Skipping capsule ${capsule._id} due to missing or invalid email.`);
+          continue; // Skip to the next capsule if email is invalid or missing
+        }
+
         // Fetch media associated with the capsule
         const mediaFiles = await Media.find({ capsuleId: capsule._id });
 
         // Send the email with the message and media attachments
-        await sendCapsuleEmail({
-          to: capsule.email,
-          subject: "🎁 Your Time Capsule Has Arrived!",
-          text: capsule.message,
-          attachments: mediaFiles.map((file) => ({
+        await sendCapsuleEmail(
+          capsule.email, // 'to'
+          "🎁 Your Time Capsule Has Arrived!", // 'subject'
+          capsule.message, // 'text'
+          mediaFiles.map((file) => ({
             filename: `media-${file.type}`,
             path: file.fileUrl,
-          })),
-        });
+          })) // 'attachments'
+        );
+        
 
         // Mark capsule as delivered
         capsule.isDelivered = true;
@@ -47,3 +55,4 @@ export const startDeliveryCron = () => {
     }
   });
 };
+

@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { mongoose,Schema } from "mongoose";
 
 const capsuleSchema = new Schema(
   {
@@ -22,4 +22,5 @@ const capsuleSchema = new Schema(
   { timestamps: true }
 );
 
-export default capsuleSchema;
+const Capsule=mongoose.model("Capsule",capsuleSchema)
+export default Capsule

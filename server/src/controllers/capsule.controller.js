@@ -1,10 +1,11 @@
-import Capsule from "../models/capsule.model.js";
+import Capsule from "../models/capsule.model.js"
 import User from "../models/user.model.js";
 import Media from "../models/media.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.utils.js";
 
 const createCapsule = async (req, res) => {
     try {
+      console.log("req:",req.body)
       const { message, deliveryDateTime } = req.body;
   
       const user = await User.findById(req.user._id);
@@ -19,7 +20,7 @@ const createCapsule = async (req, res) => {
       });
   
       if (!newCapsule) {
-        return res.status(500).json({ message: "Failed to create capsule" });
+        return res.status(500).json({ 4: "Failed to create capsule" });
       }
   
       // Handle media upload if any
