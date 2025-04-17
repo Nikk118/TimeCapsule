@@ -4,6 +4,7 @@ import connectDB from "./config/index.js"
 import userRouter from "./routers/user.route.js"
 import cookieParser from "cookie-parser"
 import capsuleRouter from "./routers/capsule.route.js"
+import path, { dirname } from "path"
 import cors from "cors"
 configDotenv()
 const app = express()
@@ -36,4 +37,14 @@ app.use("/api/capsule",capsuleRouter)
 import { startDeliveryCron } from './cron/sendCapsules.js';
 
 
+
+
 startDeliveryCron();
+
+if(process.env.NODE_ENV==="production"){
+    app.use(express.static(path.join(--dirname,"../client/dist")));
+    app.get("*",(req,res)=>{
+        res.sendFile(path.join(__dirname,"../client","dist","index.html"));
+    })
+}
+
