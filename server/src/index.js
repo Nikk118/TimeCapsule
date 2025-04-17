@@ -4,11 +4,11 @@ import connectDB from "./config/index.js"
 import userRouter from "./routers/user.route.js"
 import cookieParser from "cookie-parser"
 import capsuleRouter from "./routers/capsule.route.js"
-import path, { dirname } from "path"
+import path from "path"
 import cors from "cors"
 configDotenv()
 const app = express()
-
+const __dirname = path.resolve();
 
 connectDB()
 .then(()=>{
