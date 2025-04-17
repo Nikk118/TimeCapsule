@@ -7,8 +7,8 @@ const router = Router()
 
 router.route('/createCapsule')
   .post(
-    // verifyJwt,
-    // upload.array('media', 5),
+    verifyJwt,
+    upload.array('media', 5),
     createCapsule  
   );
 
