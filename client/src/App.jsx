@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 import LandingPage from './pages/LandinPage'
 import Footer from './components/Footer'
 import Login from './pages/Login'
-import Signup from './pages/signup'
+import Signup from './pages/Signup'
 import Home from './pages/Home'
 import {ToastContainer} from "react-toastify"
 import { authStore } from './store/authStore'
