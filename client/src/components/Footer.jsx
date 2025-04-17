@@ -10,9 +10,9 @@ function Footer() {
             <p>© {new Date().getFullYear()} All rights reserved.</p>
           </div>
           <div className="flex space-x-8">
-            <Link to="/privacy" className="hover:text-white transition">Privacy</Link>
-            <Link to="/terms" className="hover:text-white transition">Terms</Link>
-            <Link to="/contact" className="hover:text-white transition">Contact</Link>
+            <p  className="hover:text-white transition">Privacy</p>
+            <p  className="hover:text-white transition">Terms</p>
+            <p  className="hover:text-white transition">Contact</p>
           </div>
         </div>
       </footer>

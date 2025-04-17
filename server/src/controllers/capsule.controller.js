@@ -55,7 +55,7 @@ const getUserCapsule = async (req, res) => {
         return res.status(404).json({ message: "User not found" });
       }
   
-      const userCapsules = await Capsule.find({ email: user.email });
+      const userCapsules = await Capsule.find({ email: user.email }).sort({createdAt:-1});
   
       return res.status(200).json({ message: "Capsules fetched", userCapsules });
     } catch (error) {

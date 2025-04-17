@@ -31,23 +31,25 @@ export const startDeliveryCron = () => {
 
         // Fetch media associated with the capsule
         const mediaFiles = await Media.find({ capsuleId: capsule._id });
-
+        console.log("media",mediaFiles)
         // Send the email with the message and media attachments
         await sendCapsuleEmail(
-          capsule.email, // 'to'
-          "🎁 Your Time Capsule Has Arrived!", // 'subject'
-          capsule.message, // 'text'
+          capsule.email,
+          "🎁 Your Time Capsule Has Arrived!",
+          capsule.message,
           mediaFiles.map((file) => ({
             filename: `media-${file.type}`,
             path: file.fileUrl,
-          })) // 'attachments'
+          }))
         );
+        
         
 
         // Mark capsule as delivered
         capsule.isDelivered = true;
         await capsule.save();
 
+        console.log(`✅ Delivered capsule to ${capsule.email}`);
         console.log(`✅ Delivered capsule to ${capsule.email}`);
       }
     } catch (error) {
