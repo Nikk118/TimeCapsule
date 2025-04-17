@@ -7,17 +7,21 @@ export const authStore=create((set,get)=>({
     authUser:null,
     
     login: async (data) => {
-        set({islogginin:true})
         try {
+            set({islogginin:true})
             
           const res=await axiosInstant.post("/user/login",data);
           console.log(res.data)
           set({authUser:res.data.user})
           toast.success(res.data.message)
         } catch (error) {
-            set({islogginin:false})
-            console.log("somthing went rong",error)
-            toast.error(error.data.message||"failed")
+            const errMsg = error?.response?.data?.message || "Something went wrong";
+  toast.error(errMsg); 
+  set({ islogginin: false });
+  console.error("Login error:", error);
+}finally{
+    set({ islogginin: false });
+
         }
     },
 
@@ -34,6 +38,9 @@ export const authStore=create((set,get)=>({
 
             console.log("error",error)
             toast.error(error.data.message)
+        }finally{
+  set({ islogginin: false });
+
         }
     },
 

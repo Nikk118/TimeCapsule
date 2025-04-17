@@ -22,12 +22,7 @@ export default function LandingPage() {
           >
             Create Your Capsule
           </Link>
-          <Link 
-            to="/learn-more" 
-            className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 transition"
-          >
-            How It Works
-          </Link>
+         
         </div>
       </section>
 
