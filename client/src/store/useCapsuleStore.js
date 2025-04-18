@@ -8,17 +8,13 @@ export const useCapsuleStore = create((set, get) => ({
     isgettingcapsule: false,
     isAddingCapsule: false,
 
-    // Create capsule
+    
     createCapsule: async (data) => {
         try {
             set({ isAddingCapsule: true });
             const res = await axiosInstant.post("/capsule/createCapsule", data);
             toast.success(res.data.message);
-            
-            // Optimistically update the capsules list without needing to refetch
-            set(state => ({
-                capsules: [...state.capsules, res.data.newCapsule] // Assuming `newCapsule` is returned
-            }));
+            get().getCapsules()
         } catch (error) {
             toast.error(error?.response?.data?.message || "Failed to create capsule");
         } finally {
