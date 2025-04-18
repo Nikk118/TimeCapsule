@@ -108,14 +108,17 @@ const Home = () => {
             className="w-full border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
 
-          <input
-            type="file"
-            name="media"
-            multiple
-            accept="image/*,video/*"
-            onChange={handleFileChange}
-            className="w-full mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
-          />
+<label className="block mb-2 text-sm font-medium text-gray-700">
+  Upload Media <span className="text-gray-400 text-sm">(Optional)</span>
+  <input
+    type="file"
+    name="media"
+    multiple
+    accept="image/*,video/*"
+    onChange={handleFileChange}
+    className="w-full mt-1 mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+  />
+</label>
 
           <button
             onClick={handleSubmit}
