@@ -4,6 +4,8 @@ import Media from "../models/media.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.utils.js";
 
 const createCapsule = async (req, res) => {
+  console.log("🔥 BODY:", req.body);
+console.log("🔥 USER:", req.user);
     try {
       console.log("req:",req.body)
       const { message, deliveryDateTime } = req.body;

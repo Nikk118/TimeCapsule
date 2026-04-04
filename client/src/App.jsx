@@ -9,13 +9,13 @@ import Signup from './pages/Signup'
 import Home from './pages/Home'
 import {ToastContainer} from "react-toastify"
 import { authStore } from './store/authStore'
-
+import ChatWidget from './components/ChatWidget'
 
 function App() {
  
 
   const {authUser,getUser}=authStore()
-
+console.log(authUser)
   useEffect(()=>{
     getUser()
   },[getUser])
@@ -30,6 +30,15 @@ function App() {
         <Route path='home' element={authUser?<Home/>:<Login/>}/>
       </Routes>
        <Footer/>
+       
+       {authUser && (
+      <ChatWidget
+        user={{
+          _id: authUser._id
+          
+        }}
+      />
+    )}
        <ToastContainer position="top-right" autoClose={3000} />
       </div>
     );

@@ -11,7 +11,10 @@ export const authStore = create((set, get) => ({
             set({ islogginin: true });
             const res = await axiosInstant.post("/user/login", data);
             console.log(res.data);
-            set({ authUser: res.data.user });
+            set({ authUser: {
+    ...res.data.user,
+    token: res.data.token
+  } });
             toast.success(res.data.message);
         } catch (error) {
             const errMsg = error?.response?.data?.message || "Something went wrong";
@@ -25,7 +28,10 @@ export const authStore = create((set, get) => ({
         try {
             set({ islogginin: true });
             const res = await axiosInstant.post("/user/signup", data);
-            set({ authUser: res.data.user });
+            set({ authUser: {
+    ...res.data.user,
+    token: res.data.token
+  } });
             toast.success(res.data.message);
         } catch (error) {
             toast.error(error?.response?.data?.message || "Something went wrong");
@@ -46,11 +52,14 @@ export const authStore = create((set, get) => ({
     },
 
     getUser: async () => {
-        try {
-            const res = await axiosInstant.get("/user/getuser");
-            set({ authUser: res.data.user });
-        } catch (error) {
-            console.log("error", error);
-        }
+    try {
+        const res = await axiosInstant.get("/user/getuser", {
+            withCredentials: true // 🔥 MUST
+        });
+
+        set({ authUser: res.data.user });
+    } catch (error) {
+        set({ authUser: null });
     }
+}
 }));

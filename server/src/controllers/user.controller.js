@@ -15,12 +15,13 @@ const signup = async (req, res) => {
     });
 
     if (newUser) {
-        genrateToken(newUser._id, res);
+        const token=genrateToken(newUser._id, res);
         await newUser.save();
 
         res.status(201).json({
           message: "User created successfully",
           user: newUser,
+          token:token
       });
 
     }
@@ -30,24 +31,37 @@ const signup = async (req, res) => {
   }
 };
 
-const login=async(req,res)=>{
+const login = async (req, res) => {
     try {
-        const {username,password}=req.body;
-        const user = await User.findOne({username});
-        if (!user || !await bcrypt.compare(password, user.password)) {
-            return res.status(400).json({message:"invalid credentials"})
-        }else{
-            genrateToken(user._id,res);
-            await user.save();
+        const { username, password } = req.body;
 
-            return res.status(200).json({message:"user logged in successfully",user})
+        const user = await User.findOne({
+            $or: [
+                { username: username },
+                { email: username }
+            ]
+        });
+
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(400).json({ message: "Invalid credentials" });
         }
-        
+
+        genrateToken(user._id, res);
+
+        return res.status(200).json({
+            message: "User logged in successfully",
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        });
+
     } catch (error) {
-        console.error("Signup error:", error);
-    return res.status(500).json({ message: "Something went wrong", error });
+        console.error("Login error:", error);
+        return res.status(500).json({ message: "Something went wrong" });
     }
-}
+};
 
 const getUser=async(req,res)=>{
   const user= await User.findById(req.user._id)
