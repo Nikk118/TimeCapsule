@@ -30,7 +30,8 @@ const Chat = ({ user }) => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/chat", {
+      const API_URL = import.meta.env.VITE_AI_BASE_URL;
+const res = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

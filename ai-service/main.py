@@ -18,8 +18,18 @@ import json
 load_dotenv()
 
 # API URLs
-NODE_API_URL = "http://localhost:3000/api/capsule/createCapsule"
-GET_CAPSULE_URL = "http://localhost:3000/api/capsule/getUserCapsule"
+import os
+
+ENV = os.getenv("ENV", "local")
+
+BASE_NODE_URL = (
+    "http://localhost:3000"
+    if ENV == "local"
+    else "https://timecapsule-upg3.onrender.com"
+)
+
+NODE_API_URL = f"{BASE_NODE_URL}/api/capsule/createCapsule"
+GET_CAPSULE_URL = f"{BASE_NODE_URL}/api/capsule/getUserCapsule"
 
 # LLM
 llm = HuggingFaceEndpoint(
@@ -79,7 +89,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
