@@ -29,8 +29,12 @@ const Chat = ({ user }) => {
     setInput("");
     setLoading(true);
 
+
     try {
-      const API_URL = import.meta.env.VITE_AI_BASE_URL;
+      const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8000"
+    : "https://timecapsule-1-07wq.onrender.com";
 const res = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: {
