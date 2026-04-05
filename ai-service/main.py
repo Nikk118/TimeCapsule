@@ -138,6 +138,8 @@ def extract_with_llm(text: str):
 def create_tools(request: Request, session_id: str):
     state = get_session_state(session_id)
     request_state = {"tool_executed": False}
+    auth_header = request.headers.get("authorization")
+    backend_headers = {"Authorization": auth_header} if auth_header else {}
 
     def guard_tool_execution(action_name: str, action_input: str) -> str | None:
         normalized_input = normalize_text(action_input)
@@ -210,23 +212,18 @@ def create_tools(request: Request, session_id: str):
                 return "❌ Invalid date format"
 
             # 🔥 API call
-            jwt_token = request.cookies.get("jwt")
-            print("JWT:", jwt_token)
-            headers = {
-    "Content-Type": "application/json",
-    "Cookie": f"jwt={jwt_token}" if jwt_token else ""
-}
+            
+            headers = backend_headers
 
             res = requests.post(
-            NODE_API_URL,
-            json={
-        "message": message,
-        "deliveryDateTime": delivery_date_time,
-        
-    },
-        headers=headers,
-        timeout=10,
-)
+                NODE_API_URL,
+                json={
+                    "message": message,
+                    "deliveryDateTime": delivery_date_time,
+                },
+                headers=headers,
+                timeout=10,
+            )
 
             if res.status_code == 201:
                 success = f"Capsule created: '{message}'"
@@ -251,7 +248,11 @@ def create_tools(request: Request, session_id: str):
             return guard_message
 
         try:
-            res = requests.get(GET_CAPSULE_URL, cookies=request.cookies, timeout=10)
+            
+
+            headers = backend_headers
+
+            res = requests.get(GET_CAPSULE_URL, headers=headers, timeout=10)
             if res.status_code == 200:
                 capsules = res.json().get("userCapsules", [])
                 return f"You have {len(capsules)} capsules"
@@ -268,7 +269,11 @@ def create_tools(request: Request, session_id: str):
             return guard_message
 
         try:
-            res = requests.get(GET_CAPSULE_URL, cookies=request.cookies, timeout=10)
+            
+
+            headers = backend_headers
+
+            res = requests.get(GET_CAPSULE_URL, headers=headers, timeout=10)
             if res.status_code == 200:
                 capsules = res.json().get("userCapsules", [])
                 dates = [c["deliveryDateTime"] for c in capsules]
@@ -282,8 +287,9 @@ def create_tools(request: Request, session_id: str):
 
 @app.post("/chat")
 def chat(data: Input, request: Request):
-    token = request.cookies.get("jwt")
-    if not token:
+    auth_header = request.headers.get("authorization")
+
+    if not auth_header:
         return {"reply": "Unauthorized", "capsuleCreated": False}
 
     state = get_session_state(data.session_id)
@@ -355,4 +361,5 @@ Rules:
         "reply": output,
         "capsuleCreated": capsule_created
     }
+
 

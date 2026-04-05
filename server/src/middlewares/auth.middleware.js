@@ -1,28 +1,32 @@
-import jwt from "jsonwebtoken"
-import User from "../models/user.model.js"
+import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
-const verifyJwt=async(req,res,next)=>{
-    const token= req.cookies?.jwt
+const verifyJwt = async (req, res, next) => {
+  let token;
 
-    if (!token) {
-        return res.status(400).json({message:"unauthorized access"})
-    }
+  if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies?.jwt) {
+    token = req.cookies.jwt;
+  }
 
-    const decode=jwt.verify(token,process.env.JWT_SECRET)
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized access" });
+  }
 
-    if (!decode) {
-        return res.status(400).json({message:"unauthorized access"})
-    }
-
-    const user=await User.findById(decode.userId).select("-password")
+  try {
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decode.userId).select("-password");
 
     if (!user) {
-        return res.status(400).json({message:"unauthorized access"})
+      return res.status(401).json({ message: "Unauthorized access" });
     }
 
-    req.user=user
+    req.user = user;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
 
-    next()
-}
-
-export default verifyJwt
+export default verifyJwt;
