@@ -1,56 +1,91 @@
 # TimeCapsule
 
 ## Description
-TimeCapsule is a project that focuses on storing memories and moments digitally. The application allows users to create and manage a timeline of significant events in their lives, ensuring that precious moments are preserved and easily accessible. Whether it’s a family vacation, a graduation, or a personal achievement, TimeCapsule makes it easy to keep track of these milestones in a beautiful and intuitive interface.
+TimeCapsule is a project that focuses on storing memories and moments digitally. The application allows users to create and manage a timeline of significant events in their lives, ensuring that precious moments are preserved and easily accessible.
+
+Whether it’s a family vacation, a graduation, or a personal achievement, TimeCapsule makes it easy to keep track of these milestones in a beautiful and intuitive interface.
+
+🚀 What makes it unique?  
+TimeCapsule includes an AI-powered assistant that helps users create, manage, and retrieve memories intelligently.
+
+---
+
+## 🤖 AI Features
+
+- 🧠 AI Assistant (LangChain-based)
+  - Create capsules using natural language  
+  - Example: "Remind me about my Goa trip next year"
+
+- 💬 Conversational Queries
+  - "How many capsules do I have?"
+  - "Show my upcoming capsules"
+
+- 🔧 Tool-based architecture (production-ready AI responses)
+
+
+
+---
 
 ## Features
-- User authentication and profile management
-- Create, update, and delete memories
-- Upload and manage multimedia content (photos, videos, etc.)
-- Timeline view to easily navigate through events
-- Search functionality to find specific memories
-- Share memories with friends and family
-- Reminders for significant dates
+- User authentication and profile management  
+- Create, update, and delete memories  
+- Upload multimedia content (photos, videos)  
+- Timeline view of events  
+- Search functionality  
+- Share memories  
+- Reminders for important dates  
+- AI-powered interaction  
+
+---
 
 ## Tech Stack
-- **Frontend:** React, Redux, Bootstrap
-- **Backend:** Node.js, Express
-- **Database:** MongoDB
-- **Cloud Storage:** AWS S3 for media storage
-- **Authentication:** JWT for secure user authentication
+Frontend: React, Redux, Bootstrap  
+Backend: Node.js, Express  
+Database: MongoDB  
+
+AI: LangChain, Hugging Face 
+Email: Nodemailer  
+Authentication: JWT  
+
+---
 
 ## Setup Instructions
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Nikk118/TimeCapsule.git
-   cd TimeCapsule
-   ```
-2. **Install dependencies**:
-   - For the client: `cd client` and run `npm install`
-   - For the server: `cd server` and run `npm install`
-3. **Set up environment variables**:
-   - Create a `.env` file in the server directory and add the necessary configuration details (e.g., database URL, JWT secret).
-4. **Run the application**:
-   - For the client: `npm start` (in the client directory)
-   - For the server: `npm start` (in the server directory)
-5. Open your browser and go to `http://localhost:3000`.
 
-## Project Structure
+```bash
+git clone https://github.com/Nikk118/TimeCapsule.git
+cd TimeCapsule
+
+# Install frontend
+cd client
+npm install
+
+# Install backend
+cd ../server
+npm install
+
+# Create .env file in server folder and add:
+PORT=3000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret_key
+EMAIL_USER=your_email
+EMAIL_PASS=your_email_password
+HUGGINGFACE_API_KEY=your_key
+
+# Run backend
+npm start
+
+# Run frontend (in new terminal)
+cd ../client
+npm start
+```
+Project Structure
 ```
 TimeCapsule/
-├── client/              # Frontend code
-│   ├── src/            # Source files
-│   ├── public/         # Static files
-│   ├── package.json     # Frontend dependencies
-│   └── ...
-└── server/              # Backend code
-    ├── config/         # Configuration files
-    ├── models/         # Database models
-    ├── routes/         # API routes
-    ├── controllers/    # Business logic
-    ├── package.json     # Backend dependencies
-    └── ...
+├── client/
+├── server/
+├── ai-service/
+└── README.md
 ```
-
-## Conclusion
-TimeCapsule is designed to help you treasure your memories with ease and elegance. Join us in preserving life's beautiful moments!
+##Author
+Nikhil
+https://github.com/Nikk118
