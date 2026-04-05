@@ -10,7 +10,7 @@ export const genrateToken = (userId, res) => {
     res.cookie("jwt", token, {
         httpOnly: true,
         secure: false, // ✅ true in production (HTTPS)
-        sameSite: "lax", // important for frontend-backend
+        sameSite: "none", // important for frontend-backend
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 };

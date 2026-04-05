@@ -210,15 +210,23 @@ def create_tools(request: Request, session_id: str):
                 return "❌ Invalid date format"
 
             # 🔥 API call
+            jwt_token = request.cookies.get("jwt")
+            print("JWT:", jwt_token)
+            headers = {
+    "Content-Type": "application/json",
+    "Cookie": f"jwt={jwt_token}" if jwt_token else ""
+}
+
             res = requests.post(
-                NODE_API_URL,
-                json={
-                    "message": message,
-                    "deliveryDateTime": delivery_date_time,
-                },
-                cookies=request.cookies,
-                timeout=10,
-            )
+            NODE_API_URL,
+            json={
+        "message": message,
+        "deliveryDateTime": delivery_date_time,
+        
+    },
+        headers=headers,
+        timeout=10,
+)
 
             if res.status_code == 201:
                 success = f"Capsule created: '{message}'"
